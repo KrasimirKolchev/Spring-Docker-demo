@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  dealershop:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+      - "8080:8080"
+    environment:
+      - SERVER_PORT=8080
+      - MYSQL_URL=jdbc:mysql://mysqldb:3307/dealer_shop_db?useSSL=false&allowPublicKeyRetrieval=true
+    volumes:
+      - ./:/app
+    command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
+
+  mysqldb:
+    image: mysql:8.0.27
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=dealershop
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_USER=dealershop
+      - MYSQL_PASSWORD=dealershop
+      - MYSQL_DATABASE=dealer_shop_db
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - mysql_config:/etc/mysql/conf.d
+volumes:
+  mysql_data:
+  mysql_config:
