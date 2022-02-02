@@ -14,7 +14,7 @@ services:
     command: ./mvnw spring-boot:run -Dspring-boot.run.jvmArguments="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8000"
 
   mysqldb:
-    image: mysql:8.0.27
+    image: krasimirkolchev/mysqldb:latest
     ports:
       - "3307:3306"
     environment:
